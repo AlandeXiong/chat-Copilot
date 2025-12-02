@@ -268,7 +268,7 @@ public class MarketingAssistantHandler extends TextWebSocketHandler {
                 sendPayload(session, new OutgoingMessage("assistant_message", completionMessage, null));
 
                 // Send state update to mark deployment as complete
-                MockStateUpdate deploymentComplete = new MockStateUpdate(null, null, null, null, null, null, "deployment");
+                MockStateUpdate deploymentComplete = new MockStateUpdate(null, null, null, null, null, null, null, "deployment");
                 sendPayload(session, new OutgoingMessage("state_update", null, deploymentComplete.toStateNode(objectMapper)));
 
                 session.getAttributes().put("stage", ConversationStage.ANALYTICS);
@@ -410,6 +410,7 @@ public class MarketingAssistantHandler extends TextWebSocketHandler {
     private record MockStateUpdate(
             String segmentSuggestion,
             List<MockSegmentUser> segmentResult,
+            Integer segmentTotalMatched,
             String emailHtml,
             String journeyPlan,
             String scheduleHint,
@@ -433,6 +434,10 @@ public class MarketingAssistantHandler extends TextWebSocketHandler {
                     array.add(node);
                 }
                 root.set("segmentResult", array);
+            }
+
+            if (segmentTotalMatched != null) {
+                root.put("segmentTotalMatched", segmentTotalMatched);
             }
 
             if (emailHtml != null) {
@@ -515,46 +520,84 @@ public class MarketingAssistantHandler extends TextWebSocketHandler {
             String dynamicLine = "Reasoning: Derived from intent \"" + intent + "\".";
             String segmentSuggestion = baseSegment + "\n" + dynamicLine;
 
+            // Generate top 10 leads for preview
             List<MockSegmentUser> users = List.of(
-                    new MockSegmentUser("1", "Alice Chen", "alice.chen@example.com", 72),
-                    new MockSegmentUser("2", "Leo Wang", "leo.wang@example.com", 68),
-                    new MockSegmentUser("3", "Maria Gomez", "maria.gomez@example.com", 64)
+                    new MockSegmentUser("1", "Alice Chen", "alice.chen@example.com", 89),
+                    new MockSegmentUser("2", "Leo Wang", "leo.wang@example.com", 87),
+                    new MockSegmentUser("3", "Maria Gomez", "maria.gomez@example.com", 84),
+                    new MockSegmentUser("4", "David Kim", "david.kim@example.com", 82),
+                    new MockSegmentUser("5", "Sarah Johnson", "sarah.j@example.com", 79),
+                    new MockSegmentUser("6", "Michael Zhang", "m.zhang@example.com", 76),
+                    new MockSegmentUser("7", "Emily Rodriguez", "emily.r@example.com", 74),
+                    new MockSegmentUser("8", "James Williams", "j.williams@example.com", 72),
+                    new MockSegmentUser("9", "Sophie Martinez", "sophie.m@example.com", 70),
+                    new MockSegmentUser("10", "Thomas Anderson", "t.anderson@example.com", 68)
             );
 
-            return new MockStateUpdate(segmentSuggestion, users, null, null, null, null, "segment");
+            // Total matched: simulate a realistic segment size (3,847 total users)
+            return new MockStateUpdate(segmentSuggestion, users, 3847, null, null, null, null, "segment");
         }
 
         static MockStateUpdate emailFromIntent(String intent) {
             String emailHtml = """
-                <div style="font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;">
-                  <h2 style="color:#123B8D;margin-bottom:4px;">We miss you at Aurora Club</h2>
-                  <p style="font-size:14px;line-height:1.6;">
-                    Hi {{firstName}},<br/>
-                    we noticed you have not visited us in a while. Because you are one of our most valued members,
-                    we prepared an exclusive offer just for you.
+                <div style="font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto;">
+                  <!-- Hero Banner Image -->
+                  <div style="margin-bottom: 20px; border-radius: 12px; overflow: hidden;">
+                    <img 
+                      src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=1200&h=400&fit=crop&q=80" 
+                      alt="VIP Exclusive Offer" 
+                      style="width: 100%; height: auto; display: block; border-radius: 12px;"
+                    />
+                  </div>
+                  
+                  <h2 style="color:#123B8D; margin-bottom: 8px; font-size: 24px;">We miss you at Aurora Club ✨</h2>
+                  
+                  <p style="font-size:14px; line-height:1.6; color: #333;">
+                    Hi <strong>{{firstName}}</strong>,<br/>
+                    We noticed you haven't visited us in a while. Because you are one of our most valued members,
+                    we've prepared an <strong style="color:#123B8D;">exclusive VIP offer</strong> just for you.
                   </p>
-                  <p style="font-size:14px;line-height:1.6;">
-                    Reactivate your benefits before <strong>""" + LocalDateTime.now().plusDays(10).toLocalDate() + """
-                    </strong> and enjoy:
-                  </p>
-                  <ul style="font-size:14px;line-height:1.6;">
-                    <li>Extra 20% points booster on your next purchase</li>
-                    <li>Early access to the upcoming product launch</li>
-                    <li>Priority support from our concierge team</li>
+                  
+                  <div style="background: linear-gradient(135deg, #f0f7ff, #e6f2ff); padding: 16px; border-radius: 10px; margin: 16px 0; border-left: 4px solid #123B8D;">
+                    <p style="font-size:14px; line-height:1.6; margin: 0; color: #123B8D; font-weight: 600;">
+                      ⏰ Limited Time: Reactivate before <strong>""" + LocalDateTime.now().plusDays(10).toLocalDate() + """
+                      </strong>
+                    </p>
+                  </div>
+                  
+                  <h3 style="color:#123B8D; font-size: 18px; margin-top: 20px;">Your Exclusive Benefits:</h3>
+                  <ul style="font-size:14px; line-height:1.8; color: #333;">
+                    <li>🎁 <strong>Extra 20% points booster</strong> on your next purchase</li>
+                    <li>🚀 <strong>Early access</strong> to the upcoming product launch</li>
+                    <li>💎 <strong>Priority support</strong> from our concierge team</li>
+                    <li>🎟️ <strong>Complimentary upgrade</strong> to Platinum tier for 3 months</li>
                   </ul>
-                  <p style="margin-top:16px;">
-                    <a href="https://example.com/reactivate" class="button">
-                      Reactivate my benefits
+                  
+                  <!-- CTA Button -->
+                  <div style="text-align: center; margin: 28px 0;">
+                    <a href="https://example.com/reactivate" 
+                       class="button"
+                       style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #123B8D, #2e5bff); color: #fff; text-decoration: none; border-radius: 999px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(18, 59, 141, 0.4);">
+                      ✨ Reactivate My VIP Benefits
                     </a>
-                  </p>
-                  <p style="font-size:12px;color:#666;margin-top:18px;">
-                    If you do not want to receive similar campaigns, you can <a href="#" style="color:#123B8D;">manage your preferences</a>.
+                  </div>
+                  
+                  <!-- Social Proof -->
+                  <div style="background: #f9f9f9; padding: 14px; border-radius: 8px; margin-top: 20px; text-align: center;">
+                    <p style="font-size: 13px; color: #666; margin: 0;">
+                      <strong style="color: #123B8D;">2,847</strong> VIP members have already reactivated this month
+                    </p>
+                  </div>
+                  
+                  <p style="font-size:12px; color:#999; margin-top: 24px; text-align: center; line-height: 1.5;">
+                    Questions? Reply to this email or visit our <a href="#" style="color:#123B8D; text-decoration: none;">Help Center</a>.<br/>
+                    Don't want to receive these offers? <a href="#" style="color:#123B8D; text-decoration: none;">Manage your preferences</a>
                   </p>
                 </div>
                 """;
 
             // In this POC we do not change the segment at this step, we only enrich the email.
-            return new MockStateUpdate(null, null, emailHtml, null, null, null, "email");
+            return new MockStateUpdate(null, null, null, emailHtml, null, null, null, "email");
         }
 
         static MockStateUpdate journeyFromIntent(String intent) {
@@ -570,7 +613,7 @@ public class MarketingAssistantHandler extends TextWebSocketHandler {
 
             String scheduleHint = "Best time window: Tue–Thu, 9:00–11:30 in recipient local time (historical uplift +18%).";
 
-            return new MockStateUpdate(null, null, null, journeyPlan, scheduleHint, null, "journey");
+            return new MockStateUpdate(null, null, null, null, journeyPlan, scheduleHint, null, "journey");
         }
         
         static MockStateUpdate analyticsFromIntent(String intent) {
@@ -611,7 +654,7 @@ public class MarketingAssistantHandler extends TextWebSocketHandler {
                 bottleneck
             );
             
-            return new MockStateUpdate(null, null, null, null, null, analyticsData, "analytics");
+            return new MockStateUpdate(null, null, null, null, null, null, analyticsData, "analytics");
         }
     }
 }

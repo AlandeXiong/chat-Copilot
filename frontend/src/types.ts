@@ -9,6 +9,7 @@ export interface SegmentUser {
 export interface SegmentData {
   suggestion: string;
   result: SegmentUser[];
+  totalMatched: number; // Total number of matched users in the segment
 }
 
 export interface EmailData {

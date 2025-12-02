@@ -11,6 +11,7 @@ type Payload =
       state: {
         segmentSuggestion?: string;
         segmentResult?: SegmentUser[];
+        segmentTotalMatched?: number;
         emailHtml?: string;
         journeyPlan?: string;
         scheduleHint?: string;

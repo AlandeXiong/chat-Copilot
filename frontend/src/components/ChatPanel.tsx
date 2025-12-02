@@ -129,7 +129,8 @@ export function ChatPanel({ state, onStateChange }: Props) {
       if (stateData.segmentSuggestion || stateData.segmentResult) {
         richMessage.segmentData = {
           suggestion: stateData.segmentSuggestion || "",
-          result: stateData.segmentResult || []
+          result: stateData.segmentResult || [],
+          totalMatched: stateData.segmentTotalMatched || 0
         };
       }
 

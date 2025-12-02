@@ -73,20 +73,47 @@ export const MessageBubble = memo(function MessageBubble({ message }: Props) {
             Segment Strategy
           </div>
           <pre className="segment-suggestion">{segmentData.suggestion}</pre>
+          
+          {segmentData.totalMatched > 0 && (
+            <div className="segment-stats">
+              <div className="segment-stat-card">
+                <div className="stat-label">Total Matched</div>
+                <div className="stat-value-large">{segmentData.totalMatched.toLocaleString()}</div>
+                <div className="stat-sublabel">users in segment</div>
+              </div>
+              <div className="segment-stat-card">
+                <div className="stat-label">Showing Top</div>
+                <div className="stat-value-large">{Math.min(10, segmentData.result.length)}</div>
+                <div className="stat-sublabel">highest scored leads</div>
+              </div>
+              <div className="segment-stat-card">
+                <div className="stat-label">Avg. Score</div>
+                <div className="stat-value-large">
+                  {segmentData.result.length > 0 
+                    ? Math.round(segmentData.result.reduce((sum, u) => sum + u.score, 0) / segmentData.result.length)
+                    : 0}
+                </div>
+                <div className="stat-sublabel">out of 100</div>
+              </div>
+            </div>
+          )}
+
           {segmentData.result && segmentData.result.length > 0 && (
             <div className="segment-crowd">
               <div className="segment-crowd-header">
-                <span className="rich-icon">📊</span>
-                Matched Users ({segmentData.result.length})
+                <span className="rich-icon">🏆</span>
+                Top {segmentData.result.length} Leads Preview
               </div>
               <div className="segment-table">
                 <div className="segment-table-header">
+                  <span>Rank</span>
                   <span>Name</span>
                   <span>Email</span>
                   <span>Score</span>
                 </div>
-                {segmentData.result.map((user) => (
+                {segmentData.result.map((user, idx) => (
                   <div className="segment-table-row" key={user.id}>
+                    <span className="segment-rank">#{idx + 1}</span>
                     <span>{user.name}</span>
                     <span>{user.email}</span>
                     <span className="segment-score">{user.score}</span>

@@ -1,5 +1,18 @@
 ## Smart Marketing Copilot POC
 
+## 🎯 Project Overview
+
+An intelligent marketing campaign builder with AI-powered multi-turn conversation, featuring:
+- **Segment Creation**: AI-driven audience targeting with real-time user matching
+- **Email Template Generation**: HTML email creation with personalization
+- **Customer Journey Design**: Multi-step automation with branching logic
+- **Intelligent Deployment**: Real-time campaign deployment with 45-second simulation
+- **Performance Analytics**: Conversion funnel analysis with AI bottleneck diagnostics
+
+---
+
+# Smart Marketing Copilot POC (智能营销 Copilot)
+
 This repository contains a minimal proof-of-concept for an intelligent marketing assistant similar to D365 Customer Insights Copilot.
 The goal is to keep the implementation simple and fully commented while keeping a professional enterprise-style UI.
 

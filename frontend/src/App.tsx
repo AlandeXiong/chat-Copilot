@@ -15,7 +15,7 @@ export function App() {
         <div className="brand">
           <span className="brand-logo">◎</span>
           <div>
-            <div className="brand-title">Smart Marketing Copilot</div>
+            <div className="brand-title">LCMS Copilot</div>
             <div className="brand-subtitle">
               POC – Intelligent campaign and journey builder
             </div>

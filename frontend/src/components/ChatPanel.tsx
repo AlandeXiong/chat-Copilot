@@ -8,6 +8,17 @@ interface Props {
   onStateChange(next: MarketingState): void;
 }
 
+// Helper function to determine if a step is completed
+const isStepCompleted = (
+  currentStep: string | undefined, 
+  stepToCheck: string
+): boolean => {
+  const stepOrder = ["segment", "email", "journey", "deployment", "analytics"];
+  const currentIndex = stepOrder.indexOf(currentStep || "segment");
+  const checkIndex = stepOrder.indexOf(stepToCheck);
+  return currentIndex > checkIndex;
+};
+
 export function ChatPanel({ state, onStateChange }: Props) {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
@@ -25,6 +36,13 @@ export function ChatPanel({ state, onStateChange }: Props) {
     const payloadId = JSON.stringify(lastPayload) + Date.now();
     if (lastPayloadIdRef.current === payloadId) return;
     lastPayloadIdRef.current = payloadId;
+
+    if (lastPayload.type === "stage_start") {
+      // Immediately update the conversation step when stage starts
+      onStateChange({ 
+        conversationStep: lastPayload.stage as "segment" | "email" | "journey" | "deployment" | "analytics"
+      });
+    }
 
     if (lastPayload.type === "thinking") {
       // Update or create thinking message
@@ -54,8 +72,36 @@ export function ChatPanel({ state, onStateChange }: Props) {
       });
     }
 
+    if (lastPayload.type === "deployment_progress") {
+      // Update or create deployment progress message
+      setMessages((prev) => {
+        const lastMsg = prev[prev.length - 1];
+        if (lastMsg && lastMsg.role === "deployment") {
+          // Update existing deployment message
+          return [
+            ...prev.slice(0, -1),
+            {
+              ...lastMsg,
+              deploymentProgress: lastPayload.progress
+            }
+          ];
+        } else {
+          // Create new deployment message
+          return [
+            ...prev,
+            {
+              role: "deployment",
+              content: "",
+              timestamp: new Date().toISOString(),
+              deploymentProgress: lastPayload.progress
+            }
+          ];
+        }
+      });
+    }
+
     if (lastPayload.type === "assistant_message") {
-      // Remove thinking message and add assistant response
+      // Remove thinking message (but keep deployment) and add assistant response
       setMessages((prev) => {
         const filtered = prev.filter(m => m.role !== "thinking");
         return [
@@ -100,8 +146,12 @@ export function ChatPanel({ state, onStateChange }: Props) {
         };
       }
 
+      if (stateData.analyticsData) {
+        richMessage.analyticsData = stateData.analyticsData;
+      }
+
       // Only add if there's actual rich content
-      if (richMessage.segmentData || richMessage.emailData || richMessage.journeyData) {
+      if (richMessage.segmentData || richMessage.emailData || richMessage.journeyData || richMessage.analyticsData) {
         setMessages((prev) => [...prev, richMessage]);
       }
 
@@ -114,13 +164,17 @@ export function ChatPanel({ state, onStateChange }: Props) {
 
   useEffect(() => {
     if (viewportRef.current) {
-      // Use smooth scroll to avoid flashing
-      viewportRef.current.scrollTo({
-        top: viewportRef.current.scrollHeight,
-        behavior: 'smooth'
+      // Use smooth scroll and add a small delay to ensure DOM is updated
+      requestAnimationFrame(() => {
+        if (viewportRef.current) {
+          viewportRef.current.scrollTo({
+            top: viewportRef.current.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
       });
     }
-  }, [messages.length]);
+  }, [messages]);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -144,7 +198,7 @@ export function ChatPanel({ state, onStateChange }: Props) {
     <div className="chat-container">
       <div className="chat-header">
         <div className="chat-header-left">
-          <div className="chat-title">Marketing Copilot</div>
+          <div className="chat-title">LCMS Copilot</div>
           <div className="chat-subtitle">
             Multi-turn conversation for campaign creation
           </div>
@@ -153,7 +207,8 @@ export function ChatPanel({ state, onStateChange }: Props) {
           <div className="stepper">
             <div
               className={`stepper-pill ${
-                currentStep === "segment" ? "stepper-pill-active" : ""
+                currentStep === "segment" ? "stepper-pill-active" : 
+                isStepCompleted(currentStep, "segment") ? "stepper-pill-completed" : ""
               }`}
             >
               <span className="stepper-index">1</span>
@@ -161,7 +216,8 @@ export function ChatPanel({ state, onStateChange }: Props) {
             </div>
             <div
               className={`stepper-pill ${
-                currentStep === "email" ? "stepper-pill-active" : ""
+                currentStep === "email" ? "stepper-pill-active" : 
+                isStepCompleted(currentStep, "email") ? "stepper-pill-completed" : ""
               }`}
             >
               <span className="stepper-index">2</span>
@@ -169,11 +225,30 @@ export function ChatPanel({ state, onStateChange }: Props) {
             </div>
             <div
               className={`stepper-pill ${
-                currentStep === "journey" ? "stepper-pill-active" : ""
+                currentStep === "journey" ? "stepper-pill-active" : 
+                isStepCompleted(currentStep, "journey") ? "stepper-pill-completed" : ""
               }`}
             >
               <span className="stepper-index">3</span>
               <span className="stepper-label">Journey</span>
+            </div>
+            <div
+              className={`stepper-pill ${
+                currentStep === "deployment" ? "stepper-pill-active" : 
+                isStepCompleted(currentStep, "deployment") ? "stepper-pill-completed" : ""
+              }`}
+            >
+              <span className="stepper-index">4</span>
+              <span className="stepper-label">Deploy</span>
+            </div>
+            <div
+              className={`stepper-pill ${
+                currentStep === "analytics" ? "stepper-pill-active" : 
+                isStepCompleted(currentStep, "analytics") ? "stepper-pill-completed" : ""
+              }`}
+            >
+              <span className="stepper-index">5</span>
+              <span className="stepper-label">Analytics</span>
             </div>
           </div>
           <div className={`status-pill status-${status}`}>

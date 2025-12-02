@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { SegmentUser } from "../types";
+import { SegmentUser, AnalyticsData, DeploymentProgress } from "../types";
 
 type Payload =
   | { type: "assistant_message"; message: string }
   | { type: "thinking"; step: string }
+  | { type: "stage_start"; stage: string }
+  | { type: "deployment_progress"; progress: DeploymentProgress }
   | {
       type: "state_update";
       state: {
@@ -12,7 +14,8 @@ type Payload =
         emailHtml?: string;
         journeyPlan?: string;
         scheduleHint?: string;
-        conversationStep?: "segment" | "email" | "journey";
+        analyticsData?: AnalyticsData;
+        conversationStep?: "segment" | "email" | "journey" | "deployment" | "analytics";
       };
     };
 

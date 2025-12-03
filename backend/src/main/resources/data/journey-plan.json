@@ -1,0 +1,5 @@
+{
+  "plan": "1. Entry: Segment \"Inactive VIP customers\" (evaluated daily).\n2. Step: Send re-engagement email within 2 hours after entry.\n3. Wait: 3 days.\n4. Branch:\n   - If email opened but no purchase: send reminder with smaller incentive.\n   - If email not opened: resend with different subject line and send time.\n5. Exit: Mark member as \"re-engaged\" if purchase happens within 14 days.",
+  "scheduleHint": "Best time window: Tue–Thu, 9:00–11:30 in recipient local time (historical uplift +18%)."
+}
+

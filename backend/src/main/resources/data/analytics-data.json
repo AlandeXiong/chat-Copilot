@@ -1,0 +1,67 @@
+{
+  "totalImpressions": 124500,
+  "totalLeads": 2548,
+  "overallConversionRate": 2.05,
+  "funnelStages": [
+    {
+      "stage": "Impressions",
+      "count": 124500,
+      "rate": 100.0,
+      "change": null
+    },
+    {
+      "stage": "Clicks",
+      "count": 8970,
+      "rate": 7.2,
+      "change": -2.3
+    },
+    {
+      "stage": "Landing Page Views",
+      "count": 7845,
+      "rate": 87.5,
+      "change": -5.1
+    },
+    {
+      "stage": "Form Starts",
+      "count": 3920,
+      "rate": 50.0,
+      "change": -8.7
+    },
+    {
+      "stage": "Leads Generated",
+      "count": 2548,
+      "rate": 65.0,
+      "change": -12.4
+    },
+    {
+      "stage": "Qualified Leads",
+      "count": 1274,
+      "rate": 50.0,
+      "change": -15.2
+    },
+    {
+      "stage": "Conversions",
+      "count": 408,
+      "rate": 32.0,
+      "change": -18.6
+    }
+  ],
+  "bottleneck": {
+    "stage": "Leads → Qualified Leads",
+    "dropoffRate": 50.0,
+    "reasons": [
+      "Lead scoring model showing 45% false positives in current criteria",
+      "Average lead response time of 18 hours (industry benchmark: 5 hours)",
+      "Missing qualification questions in lead capture form",
+      "No automated lead nurturing sequence for warm leads"
+    ],
+    "recommendations": [
+      "🎯 Refine lead scoring: Add engagement recency weight (last 7 days activity +20 pts)",
+      "⚡ Implement instant lead routing to sales team based on lead score >70",
+      "📝 Add 2-3 qualification questions: Budget range, Decision timeline, Current solution",
+      "🤖 Set up 3-touch automated nurture sequence for leads scoring 50-70",
+      "📊 A/B test shorter form (5 fields vs current 8 fields) to improve completion rate"
+    ]
+  }
+}
+

@@ -1,0 +1,67 @@
+{
+  "suggestion": "Segment: Inactive VIP customers\nFilters:\n  - Loyalty tier equals \"Gold\" or \"Platinum\"\n  - Last activity greater than 60 days\n  - Email channel opted-in\n  - Engagement score between 30 and 65\n",
+  "totalMatched": 3847,
+  "topLeads": [
+    {
+      "id": "1",
+      "name": "Alice Chen",
+      "email": "alice.chen@example.com",
+      "score": 89
+    },
+    {
+      "id": "2",
+      "name": "Leo Wang",
+      "email": "leo.wang@example.com",
+      "score": 87
+    },
+    {
+      "id": "3",
+      "name": "Maria Gomez",
+      "email": "maria.gomez@example.com",
+      "score": 84
+    },
+    {
+      "id": "4",
+      "name": "David Kim",
+      "email": "david.kim@example.com",
+      "score": 82
+    },
+    {
+      "id": "5",
+      "name": "Sarah Johnson",
+      "email": "sarah.j@example.com",
+      "score": 79
+    },
+    {
+      "id": "6",
+      "name": "Michael Zhang",
+      "email": "m.zhang@example.com",
+      "score": 76
+    },
+    {
+      "id": "7",
+      "name": "Emily Rodriguez",
+      "email": "emily.r@example.com",
+      "score": 74
+    },
+    {
+      "id": "8",
+      "name": "James Williams",
+      "email": "j.williams@example.com",
+      "score": 72
+    },
+    {
+      "id": "9",
+      "name": "Sophie Martinez",
+      "email": "sophie.m@example.com",
+      "score": 70
+    },
+    {
+      "id": "10",
+      "name": "Thomas Anderson",
+      "email": "t.anderson@example.com",
+      "score": 68
+    }
+  ]
+}
+

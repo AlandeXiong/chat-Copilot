@@ -1,0 +1,229 @@
+{
+  "segment": [
+    {
+      "step": "🧠 Analyzing marketing intent and extracting key parameters...",
+      "delayMs": 1100
+    },
+    {
+      "step": "🔧 Tool Call 1/3: CustomerSegmentationEngine",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Parsing targeting criteria from intent",
+      "delayMs": 700
+    },
+    {
+      "step": "   → Building filter conditions (loyalty tier, activity, engagement)",
+      "delayMs": 900
+    },
+    {
+      "step": "🔧 Tool Call 2/3: UserDatabaseQuery",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Executing query against 2.4M user records",
+      "delayMs": 1000
+    },
+    {
+      "step": "   → Found 3,847 matching users",
+      "delayMs": 600
+    },
+    {
+      "step": "🔧 Tool Call 3/3: SegmentScoringEngine",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Calculating engagement scores and ranking",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Top 10 candidates selected for preview",
+      "delayMs": 700
+    },
+    {
+      "step": "✅ Synthesizing segment strategy and results...",
+      "delayMs": 600
+    }
+  ],
+  "email": [
+    {
+      "step": "🧠 Analyzing desired tone, style and messaging strategy...",
+      "delayMs": 1000
+    },
+    {
+      "step": "🔧 Tool Call 1/3: EmailContentGenerator",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Generating subject line and preview text",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Creating personalized body content with dynamic fields",
+      "delayMs": 1000
+    },
+    {
+      "step": "🔧 Tool Call 2/3: EmailDesignEngine",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Applying responsive HTML/CSS template",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Optimizing for mobile and desktop rendering",
+      "delayMs": 800
+    },
+    {
+      "step": "🔧 Tool Call 3/3: CTAOptimizer",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Positioning primary CTA button for max conversion",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Adding secondary action links",
+      "delayMs": 700
+    },
+    {
+      "step": "✅ Assembling final HTML template with inline styles...",
+      "delayMs": 600
+    }
+  ],
+  "journey": [
+    {
+      "step": "🧠 Analyzing customer journey requirements and touchpoints...",
+      "delayMs": 1000
+    },
+    {
+      "step": "🔧 Tool Call 1/3: JourneyOrchestrator",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Mapping entry conditions and exit criteria",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Designing multi-step flow with wait periods",
+      "delayMs": 1000
+    },
+    {
+      "step": "🔧 Tool Call 2/3: BranchLogicEngine",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Creating conditional branches (opened/not opened)",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Defining fallback actions and retry logic",
+      "delayMs": 800
+    },
+    {
+      "step": "🔧 Tool Call 3/3: SendTimeOptimizer",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Analyzing historical engagement patterns",
+      "delayMs": 1000
+    },
+    {
+      "step": "   → Recommending optimal send windows by timezone",
+      "delayMs": 900
+    },
+    {
+      "step": "✅ Building complete journey orchestration plan...",
+      "delayMs": 600
+    }
+  ],
+  "deployment": [
+    {
+      "step": "🚀 Initializing intelligent deployment system...",
+      "delayMs": 800
+    },
+    {
+      "step": "🔧 Tool Call 1/2: CampaignOrchestrator",
+      "delayMs": 600
+    },
+    {
+      "step": "   → Validating campaign configuration and audience segment",
+      "delayMs": 700
+    },
+    {
+      "step": "   → Allocating distributed processing nodes (12 workers)",
+      "delayMs": 800
+    },
+    {
+      "step": "🔧 Tool Call 2/2: DeliveryOptimizer",
+      "delayMs": 600
+    },
+    {
+      "step": "   → Calculating optimal send rate (850 emails/sec)",
+      "delayMs": 700
+    },
+    {
+      "step": "   → Applying throttling rules and reputation management",
+      "delayMs": 800
+    },
+    {
+      "step": "✅ Starting campaign deployment...",
+      "delayMs": 500
+    }
+  ],
+  "analytics": [
+    {
+      "step": "🧠 Analyzing campaign performance and conversion metrics...",
+      "delayMs": 1000
+    },
+    {
+      "step": "🔧 Tool Call 1/3: CampaignDataAggregator",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Collecting impression data from ad platforms",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Aggregating click-through and engagement metrics",
+      "delayMs": 1000
+    },
+    {
+      "step": "🔧 Tool Call 2/3: ConversionFunnelAnalyzer",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Building funnel stages: Impression → Click → Lead → Conversion",
+      "delayMs": 1000
+    },
+    {
+      "step": "   → Calculating drop-off rates at each stage",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Identified bottleneck at Lead → Conversion (68% drop-off)",
+      "delayMs": 1100
+    },
+    {
+      "step": "🔧 Tool Call 3/3: AIDiagnosticEngine",
+      "delayMs": 800
+    },
+    {
+      "step": "   → Running root cause analysis on conversion bottleneck",
+      "delayMs": 1000
+    },
+    {
+      "step": "   → Analyzing historical patterns and A/B test data",
+      "delayMs": 900
+    },
+    {
+      "step": "   → Generating actionable recommendations",
+      "delayMs": 800
+    },
+    {
+      "step": "✅ Synthesizing diagnostic report with visualizations...",
+      "delayMs": 600
+    }
+  ]
+}
+

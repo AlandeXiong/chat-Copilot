@@ -1,0 +1,46 @@
+{
+  "totalRecipients": 3847,
+  "successRate": 0.97,
+  "failureRate": 0.03,
+  "throughputPerSecond": 850,
+  "progressSteps": [3, 8, 15, 22, 30, 38, 46, 55, 63, 71, 78, 84, 90, 95, 98, 100],
+  "delayPerStepMs": {
+    "min": 2500,
+    "max": 3500
+  },
+  "phases": [
+    {
+      "progressThreshold": 5,
+      "description": "🔄 Initializing deployment infrastructure"
+    },
+    {
+      "progressThreshold": 15,
+      "description": "📨 Batch 1/6 - VIP and high-value customers"
+    },
+    {
+      "progressThreshold": 30,
+      "description": "📨 Batch 2/6 - Engaged users (last 30 days)"
+    },
+    {
+      "progressThreshold": 50,
+      "description": "📨 Batch 3/6 - Active segment (last 60 days)"
+    },
+    {
+      "progressThreshold": 70,
+      "description": "📨 Batch 4/6 - Warm leads"
+    },
+    {
+      "progressThreshold": 85,
+      "description": "📨 Batch 5/6 - Re-engagement targets"
+    },
+    {
+      "progressThreshold": 98,
+      "description": "📨 Batch 6/6 - Final recipients"
+    },
+    {
+      "progressThreshold": 100,
+      "description": "✅ Finalizing delivery logs and analytics"
+    }
+  ]
+}
+

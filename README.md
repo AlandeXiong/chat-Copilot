@@ -73,9 +73,18 @@ chatbot/
         ├── java/com/example/smartmarketing/
         │   ├── SmartMarketingApplication.java      # Boot entry
         │   ├── config/WebSocketConfig.java         # WebSocket setup
+        │   ├── util/DataLoader.java                # Data file loader utility
         │   └── ws/MarketingAssistantHandler.java   # Main handler with COT simulation
         └── resources/
-            └── application.properties               # Server config (port 8080)
+            ├── application.properties               # Server config (port 8080)
+            └── data/                                # Mock data configuration files
+                ├── README.md                        # Data configuration guide
+                ├── segment-data.json                # Segment filters and top 10 leads
+                ├── email-template.html              # HTML email with hero image
+                ├── journey-plan.json                # Customer journey definition
+                ├── analytics-data.json              # Conversion funnel data
+                ├── deployment-config.json           # Deployment simulation settings
+                └── thinking-steps.json              # COT steps for all stages
 ```
 
 ---
@@ -263,19 +272,40 @@ The POC implements a **5-stage progressive workflow** with real-time AI thinking
 
 ## 🧪 Mock AI Engine
 
-The backend simulates realistic AI behavior with:
+The backend simulates realistic AI behavior with **configuration-based data loading**:
 
-- **COT (Chain-of-Thought) simulation**: 10-12 steps per stage with varied delays (600-1000ms)
-- **Tool invocation simulation**: 2-3 tools per stage (e.g., SegmentationEngine, CTAOptimizer, DiagnosticEngine)
-- **Progress realism**: Non-linear progress steps (faster start, slower finish)
-- **Success/failure rates**: 97% success, 3% failure (industry-standard)
-- **Deterministic mock data**: Based on user intent string for reproducibility
+### Data-Driven Architecture
+All mock responses are loaded from JSON/HTML files in `backend/src/main/resources/data/`:
+- ✅ **No recompilation needed** - Edit files and restart backend
+- ✅ **Easy customization** - Marketing team can update content
+- ✅ **Quick A/B testing** - Swap different data files
+- ✅ **Version controlled** - Track data changes separately
+
+### Mock Data Files
+- **`segment-data.json`**: Segment filters + top 10 leads (3,847 total matched)
+- **`email-template.html`**: HTML email with hero banner image
+- **`journey-plan.json`**: Multi-step journey with scheduling
+- **`analytics-data.json`**: 7-stage funnel + bottleneck diagnostics
+- **`deployment-config.json`**: Deployment settings (timing, batches, throughput)
+- **`thinking-steps.json`**: COT steps for all 5 stages (11-13 steps each)
+
+### Simulation Features
+- **COT (Chain-of-Thought)**: 10-13 steps per stage with configurable delays
+- **Tool invocation**: 2-3 tools per stage (e.g., CustomerSegmentationEngine, CTAOptimizer)
+- **Progress realism**: Non-linear deployment (16 steps, faster start → slower finish)
+- **Success/failure rates**: 97% success / 3% failure (configurable)
+- **Dynamic placeholders**: `{{firstName}}`, `{{deadline}}` auto-replacement
 
 ### Timing Breakdown
-- Stage 1-3: ~9 seconds each (segment, email, journey)
-- Stage 4: ~45-48 seconds (deployment with 16 progress updates)
-- Stage 5: ~10 seconds (analytics)
+- Stage 1: Segment (~9s with 11 thinking steps)
+- Stage 2: Email (~9s with 11 thinking steps)
+- Stage 3: Journey (~9s with 11 thinking steps)
+- Stage 4: Deployment (~45-48s with 16 progress updates + 8 thinking steps)
+- Stage 5: Analytics (~10s with 13 thinking steps)
 - **Total end-to-end experience**: ~85 seconds
+
+### Customization Guide
+See `backend/src/main/resources/data/README.md` for detailed configuration instructions.
 
 ---
 
